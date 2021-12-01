@@ -6,6 +6,9 @@ name = "pypi"
 [packages]
 
 [dev-packages]
+ipdb = "*"
+ipython = "*"
+pytest = "*"
 
 [requires]
 python_version = "3.9"
