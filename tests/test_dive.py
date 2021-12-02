@@ -7,3 +7,9 @@ def test_sub_moves_forward():
     """
     sub = Submarine()
     assert sub.engage("forward 5").horizontal_position == 5
+
+
+def test_sub_moves_down():
+    """Given a command to move down, the sub changes depth."""
+    sub = Submarine()
+    assert sub.engage("down 5").depth == 5

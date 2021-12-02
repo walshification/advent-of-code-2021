@@ -24,11 +24,19 @@ class Submarine:
     def engage(self, command: str) -> "Submarine":
         """Given a command, make it so, Number One."""
         move, value = command.split(" ")
-        MOVES[move](self, int(value))
-        return self
+        try:
+            MOVES[move](self, int(value))
+        except KeyError:
+            raise Exception(f"Unknown command '{move}'")
+        else:
+            return self
 
 
 # Commands
+
+def down(submarine: Submarine, change: int) -> None:
+    """Add the change to the sub's depth."""
+    submarine.depth += change
 
 def forward(submarine: Submarine, change: int) -> None:
     """Add the change to the sub's horizontal position."""
@@ -36,5 +44,6 @@ def forward(submarine: Submarine, change: int) -> None:
 
 
 MOVES = {
+    "down": down,
     "forward": forward,
 }
