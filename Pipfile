@@ -8,7 +8,9 @@ name = "pypi"
 [dev-packages]
 ipdb = "*"
 ipython = "*"
+mypy = "*"
 pytest = "*"
+black = "*"
 
 [requires]
 python_version = "3.9"
