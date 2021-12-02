@@ -22,8 +22,7 @@ def test_sub_moves_up():
 
 
 def test_sub_follows_path_to_final_position_value():
-    """Sub can follow a path and calculate its final position's value.
-    """
+    """Sub can follow a path and calculate its final position's value."""
     sub = Submarine()
     commands = [
         "forward 5",
