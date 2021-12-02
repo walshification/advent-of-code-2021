@@ -55,3 +55,14 @@ MOVES = {
     "forward": forward,
     "up": up,
 }
+
+
+if __name__ == "__main__":
+    with open("inputs/dive.txt") as input:
+        commands = [command for command in input]
+
+    sub = Submarine()
+    for command in commands:
+        sub.engage(command)
+
+    print(f"Part One: {sub.final_value}")
