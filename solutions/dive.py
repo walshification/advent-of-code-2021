@@ -34,16 +34,24 @@ class Submarine:
 
 # Commands
 
+
 def down(submarine: Submarine, change: int) -> None:
     """Add the change to the sub's depth."""
     submarine.depth += change
+
 
 def forward(submarine: Submarine, change: int) -> None:
     """Add the change to the sub's horizontal position."""
     submarine.horizontal_position += change
 
 
+def up(submarine: Submarine, change: int) -> None:
+    """Subtract the change from the sub's depth."""
+    submarine.depth -= change
+
+
 MOVES = {
     "down": down,
     "forward": forward,
+    "up": up,
 }
