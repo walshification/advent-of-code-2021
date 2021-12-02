@@ -41,10 +41,32 @@ def up(submarine: "Submarine", change: int) -> None:
     submarine.depth -= change
 
 
+def aim_down(submarine: "Submarine", change: int) -> None:
+    """Add the change to the sub's aim."""
+    submarine.aim += change
+
+
+def aim_up(submarine: "Submarine", change: int) -> None:
+    """Subtract the change to the sub's aim."""
+    submarine.aim -= change
+
+
+def move_forward(submarine: "Submarine", change: int) -> None:
+    """Move based on the aim."""
+    submarine.horizontal_position += change
+    submarine.depth += (submarine.aim * change)
+
+
 MOVES = {
     "down": down,
     "forward": forward,
     "up": up,
+}
+
+PART_TWO_MOVES = {
+    "down": aim_down,
+    "forward": move_forward,
+    "up": aim_up,
 }
 
 
@@ -52,6 +74,7 @@ MOVES = {
 class Submarine:
     """Our transport. Tracks depth and horizontal position."""
 
+    aim = 0
     depth: int = 0
     horizontal_position: int = 0
 

@@ -1,4 +1,4 @@
-from solutions.dive import Submarine
+from solutions.dive import PART_TWO_MOVES, Submarine
 
 
 def test_sub_moves_forward():
@@ -38,3 +38,34 @@ def test_sub_follows_path_to_final_position_value():
     assert sub.horizontal_position == 15
     assert sub.depth == 10
     assert sub.final_value == 150
+
+
+def test_sub_aims_down():
+    """Given a command to move down, the sub changes aim."""
+    sub = Submarine()
+    assert sub.engage("down 5", moves=PART_TWO_MOVES).aim == 5
+
+
+def test_sub_aims_up():
+    """Given a command to move up, the sub changes aim."""
+    sub = Submarine()
+    assert sub.engage("up 5", moves=PART_TWO_MOVES).aim == -5
+
+
+def test_sub_follows_path_to_final_position_value_part_two():
+    """Sub can follow a path and calculate its final position's value."""
+    sub = Submarine()
+    commands = [
+        "forward 5",
+        "down 5",
+        "forward 8",
+        "up 3",
+        "down 8",
+        "forward 2",
+    ]
+    for command in commands:
+        sub.engage(command, moves=PART_TWO_MOVES)
+
+    assert sub.horizontal_position == 15
+    assert sub.depth == 60
+    assert sub.final_value == 900
