@@ -103,3 +103,9 @@ if __name__ == "__main__":
         sub.engage(command)
 
     print(f"Part One: {sub.final_value}")
+
+    sub = Submarine()
+    for command in commands:
+        sub.engage(command, PART_TWO_MOVES)
+
+    print(f"Part Two: {sub.final_value}")
