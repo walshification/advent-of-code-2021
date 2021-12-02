@@ -54,7 +54,7 @@ def aim_up(submarine: "Submarine", change: int) -> None:
 def move_forward(submarine: "Submarine", change: int) -> None:
     """Move based on the aim."""
     submarine.horizontal_position += change
-    submarine.depth += (submarine.aim * change)
+    submarine.depth += submarine.aim * change
 
 
 MOVES = {
