@@ -16,10 +16,31 @@ position is used.
 
 Multiplying the gamma rate by the epsilon rate produces the power
 consumption.
+
+Part Two
+========
+
+Next, you should verify the life support rating, which can be
+determined by multiplying the oxygen generator rating by the CO2
+scrubber rating.
 """
 from collections import Counter
 from dataclasses import dataclass, field
-from typing import List
+from typing import List, Optional, Tuple
+
+
+class BinaryCounter(Counter):
+    """Subclass of Counter for specific most common functionality."""
+
+    def most_common(self, do_honor_ties=False) -> Optional[Tuple[str, int]]:
+        """If there is a definitive most_common, return that. Return
+        None for ties.
+        """
+        most_common = super().most_common()
+        if do_honor_ties:
+            if most_common[0][1] == most_common[1][1]:
+                return None
+        return most_common
 
 
 def binary_to_int(binary_number: str) -> int:
@@ -40,9 +61,13 @@ class DiagnosticReport:
     binary_numbers: List[str]
     binary_gamma: str = ""
     binary_epsilon: str = ""
+    binary_oxygen_scrubber_rating: str = ""
+    binary_co2_scrubber_rating: str = ""
     gamma_rate: int = 0
     epsilon_rate: int = 0
-    counters: List[Counter] = field(default_factory=list)
+    oxygen_generator_rating: int = 0
+    co2_scrubber_rating: int = 0
+    counters: List[BinaryCounter] = field(default_factory=list)
 
     def __post_init__(self):
         """Process the binary numbers through the counters and assign
@@ -50,7 +75,7 @@ class DiagnosticReport:
         """
         # Give us a counter for each digit placeholder, depending on the number length.
         for _ in range(len(self.binary_numbers[0])):
-            self.counters.append(Counter())
+            self.counters.append(BinaryCounter())
 
         for number in self.binary_numbers:
             for idx, digit in enumerate(number):
@@ -71,6 +96,13 @@ class DiagnosticReport:
         rates.
         """
         return self.gamma_rate * self.epsilon_rate
+
+    @property
+    def life_support_rating(self) -> int:
+        """Calculate life support rating based on oxygen generator and
+        CO2 scrubber ratings.
+        """
+        return self.oxygen_generator_rating * self.co2_scrubber_rating
 
 
 if __name__ == "__main__":
