@@ -71,3 +71,23 @@ def test_calculate_oxygen_generator_rating():
     ]
     report = DiagnosticReport(test_binaries)
     assert report.binary_oxygen_generator_rating == "10111"
+
+
+def test_calculate_co2_scrubber_rating():
+    """Report calculates oxygen generator rating."""
+    test_binaries = [
+        "00100",
+        "11110",
+        "10110",
+        "10111",
+        "10101",
+        "01111",
+        "00111",
+        "11100",
+        "10000",
+        "11001",
+        "00010",
+        "01010",
+    ]
+    report = DiagnosticReport(test_binaries)
+    assert report.binary_co2_scrubber_rating == "01010"
