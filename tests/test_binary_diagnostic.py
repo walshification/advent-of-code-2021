@@ -91,3 +91,23 @@ def test_calculate_co2_scrubber_rating():
     ]
     report = DiagnosticReport(test_binaries)
     assert report.binary_co2_scrubber_rating == "01010"
+
+
+def test_life_support_rating():
+    """Report calculates life support rating."""
+    test_binaries = [
+        "00100",
+        "11110",
+        "10110",
+        "10111",
+        "10101",
+        "01111",
+        "00111",
+        "11100",
+        "10000",
+        "11001",
+        "00010",
+        "01010",
+    ]
+    report = DiagnosticReport(test_binaries)
+    assert report.life_support_rating == 230

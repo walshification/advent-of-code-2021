@@ -100,6 +100,10 @@ class DiagnosticReport:
         self.binary_co2_scrubber_rating = self.calculate_co2_scrubber_rating(
             self.binary_numbers
         )
+        self.oxygen_generator_rating = binary_to_int(
+            self.binary_oxygen_generator_rating
+        )
+        self.co2_scrubber_rating = binary_to_int(self.binary_co2_scrubber_rating)
 
     @property
     def power_consumption(self) -> int:
@@ -113,7 +117,7 @@ class DiagnosticReport:
         """Calculate life support rating based on oxygen generator and
         CO2 scrubber ratings.
         """
-        return self.binary_oxygen_scrubber_rating * self.binary_co2_scrubber_rating
+        return self.oxygen_generator_rating * self.co2_scrubber_rating
 
     def calculate_oxygen_generator_rating(self, filtered: List[str]) -> int:
         """Filter numbers till most common concatenation is left."""
