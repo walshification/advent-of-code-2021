@@ -39,6 +39,9 @@ class BinaryCounter(Counter):
         "1" for ties.
         """
         most_common = super().most_common()
+        if len(most_common) < 2:
+            return most_common
+
         if do_honor_ties:
             if most_common[0][1] == most_common[1][1]:
                 return winner
@@ -124,7 +127,7 @@ class DiagnosticReport:
         for idx in range(self.binary_length):
             # Filter based on most common in the filtered list.
             counter = BinaryCounter([number[idx] for number in filtered])
-            key = counter.most_common(do_honor_ties=True, winner="1")[0][0]
+            key = counter.most_common(do_honor_ties=True)[0][0]
             filtered = list(filter(lambda x: x[idx] == key, filtered))
             # If we have one number, we don't need to filter any more.
             if len(filtered) == 1:
@@ -153,3 +156,4 @@ if __name__ == "__main__":
 
     report = DiagnosticReport(binary_numbers)
     print(f"Part One: {report.power_consumption}")
+    print(f"Part Two: {report.life_support_rating}")
