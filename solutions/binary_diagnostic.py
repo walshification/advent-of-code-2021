@@ -71,3 +71,11 @@ class DiagnosticReport:
         rates.
         """
         return self.gamma_rate * self.epsilon_rate
+
+
+if __name__ == "__main__":
+    with open("inputs/binary_diagnostic.txt") as input:
+        binary_numbers = input.read().splitlines()
+
+    report = DiagnosticReport(binary_numbers)
+    print(f"Part One: {report.power_consumption}")
