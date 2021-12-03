@@ -22,6 +22,15 @@ from dataclasses import dataclass, field
 from typing import List
 
 
+def binary_to_int(binary_number: str) -> int:
+    """Convert a given binary number to an int."""
+    # This feels like cheating.
+    # return int(binary_number, 2)
+    return sum(
+        int(digit) * (2**power) for power, digit in enumerate(binary_number[::-1])
+    )
+
+
 @dataclass
 class DiagnosticReport:
     """Tracks gamma rate, epsilon rate, and calculates power
@@ -52,7 +61,6 @@ class DiagnosticReport:
             self.binary_gamma += counter.most_common()[0][0]
             # Concatenate least common digits
             self.binary_epsilon += counter.most_common()[:-13:-1][0][0]
-
 
     @property
     def power_consumption(self) -> int:

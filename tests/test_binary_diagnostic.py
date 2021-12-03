@@ -1,4 +1,4 @@
-from solutions.binary_diagnostic import DiagnosticReport
+from solutions.binary_diagnostic import DiagnosticReport, binary_to_int
 
 
 def test_report_calculates_gamma_and_epsilon_rates():
@@ -22,3 +22,10 @@ def test_report_calculates_gamma_and_epsilon_rates():
     report = DiagnosticReport(test_binaries)
     assert report.binary_gamma == "10110"
     assert report.binary_epsilon == "01001"
+
+
+def test_binary_to_int():
+    """Function can convert binary to int."""
+    assert binary_to_int("00100") == 4
+    assert binary_to_int("01") == 1
+    assert binary_to_int("1010") == 10
