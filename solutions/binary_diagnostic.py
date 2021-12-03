@@ -62,9 +62,12 @@ class DiagnosticReport:
             # Concatenate least common digits
             self.binary_epsilon += counter.most_common()[:-13:-1][0][0]
 
+        self.gamma_rate = binary_to_int(self.binary_gamma)
+        self.epsilon_rate = binary_to_int(self.binary_epsilon)
+
     @property
     def power_consumption(self) -> int:
         """Calculates power consumption based on gamma and epsilon
         rates.
         """
-        pass
+        return self.gamma_rate * self.epsilon_rate

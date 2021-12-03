@@ -29,3 +29,25 @@ def test_binary_to_int():
     assert binary_to_int("00100") == 4
     assert binary_to_int("01") == 1
     assert binary_to_int("1010") == 10
+
+
+def test_calculates_power_consumption():
+    """Report calculates power consumption."""
+    test_binaries = [
+        "00100",
+        "11110",
+        "10110",
+        "10111",
+        "10101",
+        "01111",
+        "00111",
+        "11100",
+        "10000",
+        "11001",
+        "00010",
+        "01010",
+    ]
+    report = DiagnosticReport(test_binaries)
+    assert report.gamma_rate == 22
+    assert report.epsilon_rate == 9
+    assert report.power_consumption == 198
