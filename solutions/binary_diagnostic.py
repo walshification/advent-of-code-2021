@@ -34,12 +34,12 @@ class BinaryCounter(Counter):
 
     def most_common(self, do_honor_ties=False) -> Optional[Tuple[str, int]]:
         """If there is a definitive most_common, return that. Return
-        None for ties.
+        "1" for ties.
         """
         most_common = super().most_common()
         if do_honor_ties:
             if most_common[0][1] == most_common[1][1]:
-                return None
+                return "1"
         return most_common
 
 
@@ -48,7 +48,7 @@ def binary_to_int(binary_number: str) -> int:
     # This feels like cheating.
     # return int(binary_number, 2)
     return sum(
-        int(digit) * (2**power) for power, digit in enumerate(binary_number[::-1])
+        int(digit) * (2 ** power) for power, digit in enumerate(binary_number[::-1])
     )
 
 
@@ -59,6 +59,7 @@ class DiagnosticReport:
     """
 
     binary_numbers: List[str]
+    binary_length: int = 0
     binary_gamma: str = ""
     binary_epsilon: str = ""
     binary_oxygen_scrubber_rating: str = ""
@@ -74,7 +75,9 @@ class DiagnosticReport:
         gamma and epsilon rates.
         """
         # Give us a counter for each digit placeholder, depending on the number length.
-        for _ in range(len(self.binary_numbers[0])):
+        self.binary_length = len(self.binary_numbers[0])
+
+        for _ in range(self.binary_length):
             self.counters.append(BinaryCounter())
 
         for number in self.binary_numbers:
@@ -89,6 +92,8 @@ class DiagnosticReport:
 
         self.gamma_rate = binary_to_int(self.binary_gamma)
         self.epsilon_rate = binary_to_int(self.binary_epsilon)
+        self.binary_oxygen_generator_rating = self.calculate_oxygen_generator_rating()
+        self.binary_co2_scrubber_rating = self.calculate_co2_scrubber_rating()
 
     @property
     def power_consumption(self) -> int:
@@ -102,7 +107,31 @@ class DiagnosticReport:
         """Calculate life support rating based on oxygen generator and
         CO2 scrubber ratings.
         """
-        return self.oxygen_generator_rating * self.co2_scrubber_rating
+        return self.binary_oxygen_scrubber_rating * self.binary_co2_scrubber_rating
+
+    def calculate_oxygen_generator_rating(self) -> int:
+        """Filter numbers till most common concatenation is left."""
+        # Start with the full list
+        filtered = self.binary_numbers
+        for idx in range(self.binary_length):
+            # Filter based on most common in the filtered list.
+            counter = BinaryCounter([number[idx] for number in filtered])
+            filtered = list(
+                filter(
+                    lambda x: x[idx] == counter.most_common(do_honor_ties=True)[0][0],
+                    filtered,
+                )
+            )
+            # If we have one number, we don't need to filter any more.
+            if len(filtered) == 1:
+                break
+
+        return filtered[0]
+
+
+    def calculate_co2_scrubber_rating(self) -> int:
+        """Filter numbers till least common concatenation is left."""
+        pass
 
 
 if __name__ == "__main__":
