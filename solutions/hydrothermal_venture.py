@@ -11,7 +11,7 @@ least two lines overlap?
 """
 from collections import defaultdict
 from dataclasses import dataclass, field
-from typing import List, Optional
+from typing import DefaultDict, List, Optional
 
 
 @dataclass(eq=True)
@@ -108,7 +108,7 @@ class Grid:
         """Draw the lines on the grid and count how many times a point
         is drawn over.
         """
-        point_counter = defaultdict(int)
+        point_counter: DefaultDict[str, int] = defaultdict(int)
         for line in lines:
             for point in line.points:
                 point_counter[str(point)] += 1
@@ -120,7 +120,7 @@ class Grid:
         """Draw the lines on the grid and count how many times a point
         is drawn over but only for horizontal and vertical lines.
         """
-        point_counter = defaultdict(int)
+        point_counter: DefaultDict[str, int] = defaultdict(int)
         for line in lines:
             if line.is_vertical or line.is_horizontal:
                 for point in line.points:
