@@ -68,6 +68,16 @@ class Line:
             self._delta_y = self.end.y - self.start.y
         return self._delta_y
 
+    @property
+    def is_horizontal(self) -> bool:
+        """Returns whether a line is horizontal or not."""
+        return self.delta_y == 0
+
+    @property
+    def is_vertical(self) -> bool:
+        """Returns whether a line is vertical or not."""
+        return self.delta_x == 0
+
     def draw(self) -> None:
         """Deduce the points of the line given its start and end."""
         current_point = self.start
@@ -93,8 +103,6 @@ class Line:
 class Grid:
     """Grid on which to map the lines."""
 
-    overdrawn_points: List[Point]
-
     @staticmethod
     def map(lines: List[Line]) -> int:
         """Draw the lines on the grid and count how many times a point
@@ -104,5 +112,18 @@ class Grid:
         for line in lines:
             for point in line.points:
                 point_counter[str(point)] += 1
+
+        return sum(1 for count in point_counter.values() if count > 1)
+
+    @staticmethod
+    def map_horizontal_and_vertical(lines: List[Line]) -> int:
+        """Draw the lines on the grid and count how many times a point
+        is drawn over but only for horizontal and vertical lines.
+        """
+        point_counter = defaultdict(int)
+        for line in lines:
+            if line.is_vertical or line.is_horizontal:
+                for point in line.points:
+                    point_counter[str(point)] += 1
 
         return sum(1 for count in point_counter.values() if count > 1)

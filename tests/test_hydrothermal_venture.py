@@ -52,3 +52,23 @@ def test_grid_tracks_double_points():
     lines = [Line(Point(0, 0), Point(2, 0)), Line(Point(0, 2), Point(0, 0))]
     double_count = Grid.map(lines)
     assert double_count == 1
+
+
+def test_the_test_input():
+    """Test the test input."""
+    raw_input = [
+        "0,9 -> 5,9",
+        "8,0 -> 0,8",
+        "9,4 -> 3,4",
+        "2,2 -> 2,1",
+        "7,0 -> 7,4",
+        "6,4 -> 2,0",
+        "0,9 -> 2,9",
+        "3,4 -> 1,4",
+        "0,0 -> 8,8",
+        "5,5 -> 8,2",
+    ]
+
+    lines = [Line.from_string(raw_line) for raw_line in raw_input]
+
+    assert Grid.map_horizontal_and_vertical(lines) == 5
