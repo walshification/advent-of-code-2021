@@ -9,6 +9,7 @@ total of 5 points.
 Consider only horizontal and vertical lines. At how many points do at
 least two lines overlap?
 """
+from collections import defaultdict
 from dataclasses import dataclass, field
 from typing import List, Optional
 
@@ -19,6 +20,10 @@ class Point:
 
     x: int
     y: int
+
+    def __repr__(self) -> str:
+        """Point as a string."""
+        return f"({self.x}, {self.y})"
 
 
 @dataclass
@@ -68,3 +73,22 @@ class Line:
 
             current_point = Point(new_x, new_y)
             self.points.append(current_point)
+
+
+@dataclass
+class Grid:
+    """Grid on which to map the lines."""
+
+    overdrawn_points: List[Point]
+
+    @staticmethod
+    def map(lines: List[Line]) -> int:
+        """Draw the lines on the grid and count how many times a point
+        is drawn over.
+        """
+        point_counter = defaultdict(int)
+        for line in lines:
+            for point in line.points:
+                point_counter[str(point)] += 1
+
+        return sum(1 for count in point_counter.values() if count > 1)

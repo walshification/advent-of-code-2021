@@ -1,4 +1,4 @@
-from solutions.hydrothermal_venture import Line, Point
+from solutions.hydrothermal_venture import Grid, Line, Point
 
 
 def test_line_can_draw_horizontally_with_points():
@@ -39,3 +39,10 @@ def test_line_can_draw_backwards_vertically():
     end = Point(0, 0)
     line = Line(start, end)
     assert line.points == [start, Point(0, 1), end]
+
+
+def test_grid_tracks_double_points():
+    """Grid returns the number of points marked twice."""
+    lines = [Line(Point(0, 0), Point(2, 0)), Line(Point(0, 2), Point(0, 0))]
+    double_count = Grid.map(lines)
+    assert double_count == 1
