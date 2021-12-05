@@ -89,3 +89,17 @@ class Game:
         for turn in turns:
             if final_score := self.advance(turn):
                 return final_score
+
+
+if __name__ == "__main__":
+    with open("inputs/giant_squid.txt") as input:
+        turns = [int(turn) for turn in input.readline().strip().split(",")]
+        boards = [
+            Board([int(number) for number in numbers.strip().split(" ") if number])
+            for numbers in input.readlines()
+        ]
+
+    game = Game(boards)
+    final_score = game.play(turns)
+
+    print(f"Part One: {final_score}")
