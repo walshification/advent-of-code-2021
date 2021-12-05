@@ -32,19 +32,19 @@ from typing import List, Optional, Tuple
 class BinaryCounter(Counter):
     """Subclass of Counter for specific most common functionality."""
 
-    def most_common(
-        self, do_honor_ties: bool = False, winner: str = "1"
-    ) -> Optional[Tuple[str, int]]:
+    def most_common(  # type: ignore[override]
+        self, n: Optional[int] = None, do_honor_ties: bool = False, winner: str = "1"
+    ) -> List[Tuple[str, int]]:
         """If there is a definitive most_common, return that. Return
         "1" for ties.
         """
-        most_common = super().most_common()
+        most_common = super().most_common(n=n)
         if len(most_common) < 2:
             return most_common
 
         if do_honor_ties:
             if most_common[0][1] == most_common[1][1]:
-                return winner
+                return [(winner, int(winner))]
         return most_common
 
 
@@ -122,7 +122,7 @@ class DiagnosticReport:
         """
         return self.oxygen_generator_rating * self.co2_scrubber_rating
 
-    def calculate_oxygen_generator_rating(self, filtered: List[str]) -> int:
+    def calculate_oxygen_generator_rating(self, filtered: List[str]) -> str:
         """Filter numbers till most common concatenation is left."""
         for idx in range(self.binary_length):
             # Filter based on most common in the filtered list.
@@ -135,7 +135,7 @@ class DiagnosticReport:
 
         return filtered[0]
 
-    def calculate_co2_scrubber_rating(self, filtered: List[str]) -> int:
+    def calculate_co2_scrubber_rating(self, filtered: List[str]) -> str:
         """Filter numbers till least common concatenation is left."""
         for idx in range(self.binary_length):
             # Filter based on least common in the filtered list.
