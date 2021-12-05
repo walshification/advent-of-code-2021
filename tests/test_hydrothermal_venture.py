@@ -1,6 +1,12 @@
 from solutions.hydrothermal_venture import Grid, Line, Point
 
 
+def test_lines_from_strings():
+    """Given a string of a certain format, lines can be made."""
+    line = Line.from_string("0,9 -> 3,9")
+    assert line.points == [Point(0, 9), Point(1, 9), Point(2, 9), Point(3, 9)]
+
+
 def test_line_can_draw_horizontally_with_points():
     """Given a start and an end, a line can draw the intermediary
     points.

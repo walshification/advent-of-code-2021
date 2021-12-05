@@ -40,6 +40,20 @@ class Line:
         """Draw the points of the line given a start and end."""
         self.draw()
 
+    @classmethod
+    def from_string(cls, string: str) -> "Line":
+        """Given a string of the format "x1,y1 -> x2,y2", construct a
+        line.
+        """
+        raw_start, raw_end = string.split(" -> ")
+        start_x, start_y = raw_start.split(",")
+        start = Point(int(start_x), int(start_y))
+
+        end_x, end_y = raw_end.split(",")
+        end = Point(int(end_x), int(end_y))
+
+        return cls(start, end)
+
     @property
     def delta_x(self) -> int:
         """The change in x from start to end."""
