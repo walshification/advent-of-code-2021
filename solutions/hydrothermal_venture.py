@@ -134,3 +134,4 @@ if __name__ == "__main__":
         lines = [Line.from_string(raw_line) for raw_line in input]
 
     print(f"Part One: {Grid.map_horizontal_and_vertical(lines)}")
+    print(f"Part Two: {Grid.map(lines)}")

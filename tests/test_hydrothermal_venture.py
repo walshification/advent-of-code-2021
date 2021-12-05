@@ -72,3 +72,23 @@ def test_the_test_input():
     lines = [Line.from_string(raw_line) for raw_line in raw_input]
 
     assert Grid.map_horizontal_and_vertical(lines) == 5
+
+
+def test_the_full_test_input():
+    """Test the full test input."""
+    raw_input = [
+        "0,9 -> 5,9",
+        "8,0 -> 0,8",
+        "9,4 -> 3,4",
+        "2,2 -> 2,1",
+        "7,0 -> 7,4",
+        "6,4 -> 2,0",
+        "0,9 -> 2,9",
+        "3,4 -> 1,4",
+        "0,0 -> 8,8",
+        "5,5 -> 8,2",
+    ]
+
+    lines = [Line.from_string(raw_line) for raw_line in raw_input]
+
+    assert Grid.map(lines) == 12
