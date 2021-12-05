@@ -4,6 +4,12 @@ Part One
 
 To guarantee victory against the giant squid, figure out which board
 will win first. What will your final score be if you choose that board?
+
+Part Two
+========
+
+Figure out which board will win last. Once it wins, what would its
+final score be?
 """
 from dataclasses import dataclass
 from typing import List
@@ -81,13 +87,28 @@ class Game:
         """Take a turn of a game."""
         for board in self.boards:
             board.mark_square(number)
+
+        bingos = []
+        for board in self.boards:
             if board.has_bingo:
-                return board.calculate_final_score(number)
+                self.boards.remove(board)
+                bingos.append(board.calculate_final_score(number))
+
+        if bingos:
+            return bingos[0]
 
     def play(self, turns: List[int]) -> int:
         """Advance turns until there is a winner or no more turns."""
         for turn in turns:
             if final_score := self.advance(turn):
+                return final_score
+
+    def play_to_the_last(self, turns: List[int]) -> int:
+        """Advance till every board gets bingo. Return the last final
+        score.
+        """
+        for turn in turns:
+            if (final_score := self.advance(turn)) and len(self.boards) == 0:
                 return final_score
 
 
@@ -99,7 +120,8 @@ if __name__ == "__main__":
             for numbers in input.readlines()
         ]
 
-    game = Game(boards)
-    final_score = game.play(turns)
+    game1 = Game(boards)
+    game2 = Game(boards)
 
-    print(f"Part One: {final_score}")
+    print(f"Part One: {game1.play(turns)}")
+    print(f"Part Two: {game2.play_to_the_last(turns)}")
