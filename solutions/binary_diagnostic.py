@@ -135,7 +135,6 @@ class DiagnosticReport:
 
         return filtered[0]
 
-
     def calculate_co2_scrubber_rating(self, filtered: List[str]) -> int:
         """Filter numbers till least common concatenation is left."""
         for idx in range(self.binary_length):
