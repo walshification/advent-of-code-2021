@@ -12,7 +12,7 @@ Figure out which board will win last. Once it wins, what would its
 final score be?
 """
 from dataclasses import dataclass
-from typing import List
+from typing import List, Optional
 
 
 @dataclass
@@ -83,7 +83,7 @@ class Game:
 
     boards: List[Board]
 
-    def advance(self, number: int) -> None:
+    def advance(self, number: int) -> Optional[int]:
         """Take a turn of a game."""
         for board in self.boards:
             board.mark_square(number)
@@ -96,20 +96,23 @@ class Game:
 
         if bingos:
             return bingos[0]
+        return None
 
-    def play(self, turns: List[int]) -> int:
+    def play(self, turns: List[int]) -> Optional[int]:
         """Advance turns until there is a winner or no more turns."""
         for turn in turns:
             if final_score := self.advance(turn):
-                return final_score
+                break
+        return final_score
 
-    def play_to_the_last(self, turns: List[int]) -> int:
+    def play_to_the_last(self, turns: List[int]) -> Optional[int]:
         """Advance till every board gets bingo. Return the last final
         score.
         """
         for turn in turns:
             if (final_score := self.advance(turn)) and len(self.boards) == 0:
-                return final_score
+                break
+        return final_score
 
 
 if __name__ == "__main__":

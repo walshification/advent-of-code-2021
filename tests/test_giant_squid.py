@@ -56,8 +56,8 @@ def test_board_knows_horizontal_wins(board):
     assert board.has_bingo
 
 
-def test_board_knows_horizontal_wins(board):
-    """A board can identify horizontal wins."""
+def test_board_knows_vertical_wins(board):
+    """A board can identify vertical wins."""
     for row in board.state.values():
         row[0].marked = True
 
