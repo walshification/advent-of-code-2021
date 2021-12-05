@@ -19,6 +19,6 @@ install:
   - pipenv install --dev
 
 script:
-  - pipenv run black .
+  - pipenv run black . --check
   - pipenv run mypy .
   - pipenv run pytest
