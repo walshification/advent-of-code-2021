@@ -127,3 +127,10 @@ class Grid:
                     point_counter[str(point)] += 1
 
         return sum(1 for count in point_counter.values() if count > 1)
+
+
+if __name__ == "__main__":
+    with open("inputs/hydrothermal_venture.txt") as input:
+        lines = [Line.from_string(raw_line) for raw_line in input]
+
+    print(f"Part One: {Grid.map_horizontal_and_vertical(lines)}")
