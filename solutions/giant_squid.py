@@ -51,17 +51,41 @@ class Board:
         """Check for a square of the numbered value and mark it if it
         exists.
         """
-        for square in self.state.values():
-            if square.value == number:
-                square.marked = True
+        for row in self.state.values():
+            for square in row:
+                if square.value == number:
+                    square.marked = True
 
     def calculate_final_score(self, number: int) -> int:
         """Return the sum of the unmarked squares multiplied by the
         final value before the bingo.
         """
-        return sum(
-            square.value
-            for row in self.state.values()
-            for square in row
-            if not square.marked
-        ) * number
+        return (
+            sum(
+                square.value
+                for row in self.state.values()
+                for square in row
+                if not square.marked
+            )
+            * number
+        )
+
+
+@dataclass
+class Game:
+    """A game of Bingo played with supplied boards."""
+
+    boards: List[Board]
+
+    def advance(self, number: int) -> None:
+        """Take a turn of a game."""
+        for board in self.boards:
+            board.mark_square(number)
+            if board.has_bingo:
+                return board.calculate_final_score(number)
+
+    def play(self, turns: List[int]) -> int:
+        """Advance turns until there is a winner or no more turns."""
+        for turn in turns:
+            if final_score := self.advance(turn):
+                return final_score
