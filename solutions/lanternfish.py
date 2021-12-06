@@ -31,29 +31,28 @@ class Lanternfish:
 class Ocean:
     """A place for fishies."""
 
-    def __init__(self, fish_ages: List[int]) -> None:
-        """Create pre-existing fishies."""
-        self.fishies = [Lanternfish(age) for age in fish_ages]
-
-    def live_for_eighty_days(self, day_count: int = 80) -> int:
-        """Manage fish populations for 80 days. Returns fish count."""
+    @staticmethod
+    def live(fish_ages: List[int], day_count: int = 80) -> int:
+        """Manage fish populations for a given number of days. Returns
+        fish count.
+        """
+        fishies = [Lanternfish(age) for age in fish_ages]
         for _ in range(1, day_count + 1):
             new_fish = []
-            for fish in self.fishies:
+            for fish in fishies:
                 if fish.timer == 0:
                     fish.reset()
                     new_fish.append(Lanternfish())
                 else:
                     fish.live()
-            self.fishies += new_fish
+            fishies += new_fish
 
-        return len(self.fishies)
+        return len(fishies)
 
 
 if __name__ == "__main__":
     with open("inputs/lanternfish.txt") as raw_ages:
         fish_ages = [int(age) for age in raw_ages.read().split(",")]
 
-    ocean = Ocean(fish_ages)
-    fish_count = ocean.live_for_eighty_days()
-    print(f"Part One: {fish_count}")
+    print(f"Part One: {Ocean.live(fish_ages)}")
+    print(f"Part Two: {Ocean.live(fish_ages, 256)}")

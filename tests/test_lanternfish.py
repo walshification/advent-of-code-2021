@@ -15,6 +15,5 @@ def test_initial_fish():
 
 def test_ocean_measures_population_after_eighty_days():
     """Test the test input."""
-    ocean = Ocean([3, 4, 3, 1, 2])
-    fish_count = ocean.live_for_eighty_days()
+    fish_count = Ocean.live([3, 4, 3, 1, 2])
     assert fish_count == 5934
