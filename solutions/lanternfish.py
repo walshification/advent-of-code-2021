@@ -4,28 +4,13 @@ Part One
 
 Find a way to simulate lanternfish. How many lanternfish would there be
 after 80 days?
+
+Part Two
+========
+How many lanternfish would there be after 256 days?
 """
-from dataclasses import dataclass
+from collections import Counter
 from typing import List
-
-
-@dataclass
-class Lanternfish:
-    """A fishie that spaws once a week."""
-
-    timer: int = 8
-
-    def __repr__(self) -> str:
-        """Return str info."""
-        return str(self.timer)
-
-    def live(self) -> None:
-        """Live for a day."""
-        self.timer -= 1
-
-    def reset(self) -> None:
-        """Restart the timer."""
-        self.timer = 6
 
 
 class Ocean:
@@ -36,18 +21,21 @@ class Ocean:
         """Manage fish populations for a given number of days. Returns
         fish count.
         """
-        fishies = [Lanternfish(age) for age in fish_ages]
+        # Create some fish buckets
+        fishies = Counter(fish_ages)
         for _ in range(1, day_count + 1):
-            new_fish = []
-            for fish in fishies:
-                if fish.timer == 0:
-                    fish.reset()
-                    new_fish.append(Lanternfish())
-                else:
-                    fish.live()
-            fishies += new_fish
+            # Fishies at 0 make babies
+            babies = fishies[0]
+            for bucket in range(8):
+                # Shift the aging fish to their new age bucket.
+                fishies[bucket] = fishies[bucket + 1]
 
-        return len(fishies)
+            # Add the babies to the babies bucket.
+            fishies[8] = babies
+            # Add the reset fish (same as babies) to the reset bucket.
+            fishies[6] += babies
+
+        return sum(fishies.values())
 
 
 if __name__ == "__main__":
