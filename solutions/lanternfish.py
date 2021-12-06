@@ -48,3 +48,12 @@ class Ocean:
             self.fishies += new_fish
 
         return len(self.fishies)
+
+
+if __name__ == "__main__":
+    with open("inputs/lanternfish.txt") as raw_ages:
+        fish_ages = [int(age) for age in raw_ages.read().split(",")]
+
+    ocean = Ocean(fish_ages)
+    fish_count = ocean.live_for_eighty_days()
+    print(f"Part One: {fish_count}")
