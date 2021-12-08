@@ -34,3 +34,11 @@ class CrabFleet:
                 total_fuel += 1
 
         return total_fuel
+
+
+if __name__ == "__main__":
+    with open("inputs/treachery_of_whales.txt") as input:
+        positions = [int(position) for position in input.read().split(",")]
+
+    fleet = CrabFleet(positions)
+    print(f"Part One: {fleet.calculate_minimum_fuel(fleet.median)}")
