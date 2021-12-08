@@ -4,7 +4,14 @@ least fuel possible. How much fuel must they spend to align to that
 position?
 """
 from dataclasses import dataclass
-from typing import List, Optional
+from typing import Callable, List, Optional
+
+
+def constant_burn(units: int) -> int:
+    """Return the total fuel burned to move the given number of
+    units.
+    """
+    return units
 
 
 @dataclass
@@ -22,9 +29,13 @@ class CrabFleet:
             self._median = sorted(self.crab_positions)[total // 2]
         return self._median
 
-    def calculate_minimum_fuel(self, destination: int) -> int:
+    def calculate_minimum_fuel(
+        self, destination: int, burn_rate: Callable = constant_burn
+    ) -> int:
         """Calculate the minimum-needed fuel to align to the median."""
-        return sum(abs(destination - position) for position in self.crab_positions)
+        return sum(
+            burn_rate(abs(destination - position)) for position in self.crab_positions
+        )
 
 
 if __name__ == "__main__":
