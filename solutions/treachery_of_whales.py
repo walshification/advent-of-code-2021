@@ -22,18 +22,9 @@ class CrabFleet:
             self._median = sorted(self.crab_positions)[total // 2]
         return self._median
 
-    def calculate_minimum_fuel(self, position: int) -> int:
+    def calculate_minimum_fuel(self, destination: int) -> int:
         """Calculate the minimum-needed fuel to align to the median."""
-        total_fuel = 0
-        for position in self.crab_positions:
-            while not position == self.median:
-                if position > self.median:
-                    position -= 1
-                else:
-                    position += 1
-                total_fuel += 1
-
-        return total_fuel
+        return sum(abs(destination - position) for position in self.crab_positions)
 
 
 if __name__ == "__main__":
