@@ -14,6 +14,11 @@ def constant_burn(units: int) -> int:
     return units
 
 
+def gauss_burn(units: int) -> int:
+    """Return the total fuel burned in at a cumulative rate."""
+    return sum(unit for unit in range(1, units + 1))
+
+
 @dataclass
 class CrabFleet:
     """A collection of righteous crabs to protect you."""

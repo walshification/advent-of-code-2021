@@ -1,4 +1,4 @@
-from solutions.treachery_of_whales import CrabFleet
+from solutions.treachery_of_whales import CrabFleet, gauss_burn
 
 
 def test_crab_fleet_finds_median():
@@ -18,3 +18,8 @@ def test_part_one_input():
     """Test the part one input."""
     fleet = CrabFleet([16, 1, 2, 0, 4, 2, 7, 1, 2, 14])
     assert fleet.calculate_minimum_fuel(fleet.median) == 37
+
+
+def test_gauss_burn():
+    """Fuel burned at a Gauss rate is much bigger."""
+    assert gauss_burn(4) == 10
