@@ -73,3 +73,6 @@ if __name__ == "__main__":
 
     fleet = CrabFleet(positions)
     print(f"Part One: {fleet.calculate_minimum_fuel(fleet.median)}")
+
+    gauss_min = fleet.calculate_minimum_fuel(destination=None, burn_rate=gauss_burn)
+    print(f"Part Two: {gauss_min}")
