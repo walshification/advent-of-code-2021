@@ -23,3 +23,10 @@ def test_part_one_input():
 def test_gauss_burn():
     """Fuel burned at a Gauss rate is much bigger."""
     assert gauss_burn(4) == 10
+    assert gauss_burn(9) == 45
+
+
+def test_part_two():
+    """Test the part two input."""
+    fleet = CrabFleet([16, 1, 2, 0, 4, 2, 7, 1, 2, 14])
+    assert fleet.calculate_minimum_fuel(destination=None, burn_rate=gauss_burn) == 168

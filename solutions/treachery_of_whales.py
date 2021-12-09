@@ -25,6 +25,14 @@ class CrabFleet:
 
     crab_positions: List[int]
     _median: Optional[int] = None
+    _mean: Optional[int] = None
+
+    @property
+    def mean(self) -> int:
+        """Returns the mean of the crab positions."""
+        if self._mean is None:
+            self._mean = sum(self.crab_positions) // len(self.crab_positions)
+        return self._mean
 
     @property
     def median(self) -> int:
@@ -35,9 +43,25 @@ class CrabFleet:
         return self._median
 
     def calculate_minimum_fuel(
-        self, destination: int, burn_rate: Callable = constant_burn
+        self, destination: Optional[int] = None, burn_rate: Callable = constant_burn
     ) -> int:
         """Calculate the minimum-needed fuel to align to the median."""
+        if destination is None:
+            # Find the minimum
+            return min(
+                sum(
+                    [
+                        burn_rate(abs(goal - position))
+                        for position in self.crab_positions
+                    ]
+                )
+                # Consider the positions bound by half the length of the collection,
+                # +/- the average position.
+                for goal in range(
+                    (self.mean - (len(self.crab_positions) // 2)),
+                    (self.mean + (len(self.crab_positions) // 2) + 1),
+                )
+            )
         return sum(
             burn_rate(abs(destination - position)) for position in self.crab_positions
         )
